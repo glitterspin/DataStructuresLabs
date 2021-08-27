@@ -27,7 +27,7 @@ public class GuessMyNumber {
 		String r = "H";
 		do {
 			System.out.println("is your number " + guess + "?");
-			System.out.println("Please enter (C)orrect, too (H)igh, or (L)ow");
+			System.out.println("Please enter (C)orrect, too (H)igh, or too (L)ow");
 			r = input.nextLine(); 
 			
 			//if number correct, exit the loop
@@ -46,14 +46,12 @@ public class GuessMyNumber {
 			//if number correct, exit the loop
 			if (r.equals("L")) {
 				System.out.println("inside of r.equals(L)");
-				//regenerate 
-				for (int i=(int)Math.ceil(intArray.length/2); i<intArray.length; i++) {
-					intArray[i] = i;
+				//regenerate intArray
+				int[] guessArray = new int[(int)Math.ceil(intArray.length/2)];
+				for (int i=0; i<guessArray.length; i++) {
+					guessArray[i] = i;
 				}
-			}
-			//only show guess if previous response was valid
-			if(r == "H"|| r == "L") {				
-				System.out.println("is your number " + guess + "?");
+				intArray = guessArray;
 			}
 		} while (!correct);
 		System.out.print("Your number is "+guess+"!");
