@@ -14,7 +14,7 @@ public class GuessMyNumber {
 
 	//return a guess
 	public static int midpoint(int low, int high) {
-		return (int) (Math.ceil((high - low)/2));
+		return (int) (Math.ceil((high + low)/2));
 	}
 	
 	public static void main(String []args) {
@@ -49,12 +49,12 @@ public class GuessMyNumber {
 				correct = true;
 				break;
 			}			
-			//if number too high, reduce scope
+			//if number too high, reduce scope, ending with 1 below old guess
 			if (r.equals("H")) {
 				highEnd = guess -1;
 				guess = midpoint(lowEnd,highEnd);
 			}
-			//if number too low, reduce scope
+			//if number too low, reduce scope, starting with 1 above old guess
 			if (r.equals("L")) {
 				lowEnd = guess +1;
 				guess = midpoint(lowEnd,highEnd);
