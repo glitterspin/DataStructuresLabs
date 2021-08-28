@@ -1,11 +1,27 @@
 import java.util.Scanner;
 
 public class GuessMyNumber {
+
+	//make an array
+	public static int[] arrayGen(int start, int end){
+		int delta = end - start;
+		int[] newArray = new int[delta];
+		for (int i=start; i<newArray.length; i++) {
+			newArray[i] = i;
+		}
+		return newArray;
+	}
+
+	//return a guess
+	public static int midpoint(int low, int high) {
+		return (int) (Math.ceil((high - low)/2));
+	}
+	
 	public static void main(String []args) {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 		
-		//choose array size
+		//choose max number
 		int maxNum = -1;
 		do {
 			System.out.print("Pick a maximum integer: ");
@@ -13,19 +29,17 @@ public class GuessMyNumber {
 			maxNum = Integer.parseInt(maxInput);
 		} while(maxNum <= 0);
 		
-		//make array of every number
-		int[] intArray = new int[maxNum+1];
-		for (int i=0; i<intArray.length; i++) {
-			intArray[i] = i;
-		}
-		
-		
-		//guess - first guess is maxNum/2
-		int guess = (int) (Math.floor(maxNum/2));
-		System.out.println(guess);
 		boolean correct = false;
 		String r = "H";
+		//first guess will be halfway between zero and the array's length
+		int lowEnd = 0;
+		int highEnd = maxNum+1;
+
+		//guess - first guess is maxNum/2
+		int guess = midpoint(lowEnd, highEnd);;
+
 		do {
+			
 			System.out.println("is your number " + guess + "?");
 			System.out.println("Please enter (C)orrect, too (H)igh, or too (L)ow");
 			r = input.nextLine(); 
@@ -35,23 +49,15 @@ public class GuessMyNumber {
 				correct = true;
 				break;
 			}			
-			//if number correct, exit the loop
+			//if number too high, reduce scope
 			if (r.equals("H")) {
-				System.out.println("inside of r.equals(H)");
-				//regenerate 
-				for (int i=0; i<(int)Math.ceil(intArray.length/2); i++) {
-					intArray[i] = i;
-				}
+				highEnd = guess -1;
+				guess = midpoint(lowEnd,highEnd);
 			}
-			//if number correct, exit the loop
+			//if number too low, reduce scope
 			if (r.equals("L")) {
-				System.out.println("inside of r.equals(L)");
-				//regenerate intArray
-				int[] guessArray = new int[(int)Math.ceil(intArray.length/2)];
-				for (int i=0; i<guessArray.length; i++) {
-					guessArray[i] = i;
-				}
-				intArray = guessArray;
+				lowEnd = guess +1;
+				guess = midpoint(lowEnd,highEnd);
 			}
 		} while (!correct);
 		System.out.print("Your number is "+guess+"!");
